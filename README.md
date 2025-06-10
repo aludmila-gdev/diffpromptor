@@ -1,37 +1,38 @@
+```mermaid
 flowchart LR
-  %% Frontend
+  %% → Front-end
   subgraph Frontend
-    UA[Usuário] -->|Acessa via HTTP| WebApp[Web App]
+    UA(Usuário) -->|HTTP| WebApp(Web App)
   end
 
-  %% API Gateway
-  subgraph API
-    WebApp --> APIGW[API Gateway]
+  %% → API Gateway
+  subgraph API_Gateway
+    WebApp --> APIGW(API Gateway)
   end
 
-  %% Serviços de Autenticação e Usuário
-  subgraph Autenticação & Usuário
-    APIGW --> AuthSvc[Auth Service]
-    AuthSvc --> UserSvc[User Service]
+  %% → Serviços de Autenticação & Usuário
+  subgraph Auth_User
+    APIGW --> AuthSvc(Auth Service)
+    AuthSvc --> UserSvc(User Service)
     UserSvc --> DBUser[(User DB)]
   end
 
-  %% Serviços de Pedido e Pagamento
-  subgraph Pedidos & Pagamentos
-    APIGW --> OrderSvc[Order Service]
+  %% → Pedidos & Pagamentos
+  subgraph Orders_Payments
+    APIGW --> OrderSvc(Order Service)
     OrderSvc --> DBOrder[(Orders DB)]
-    OrderSvc --> PaymentSvc[Payment Service]
+    OrderSvc --> PaymentSvc(Payment Service)
     PaymentSvc --> ThirdParty[Gateway Externo]
   end
 
-  %% Serviços de Estoque
-  subgraph Estoque
-    APIGW --> InventorySvc[Inventory Service]
+  %% → Estoque
+  subgraph Inventory
+    APIGW --> InventorySvc(Inventory Service)
     InventorySvc --> DBInventory[(Inventory DB)]
   end
 
-  %% Notificações
-  subgraph Notificações
-    OrderSvc --> NotifySvc[Notification Service]
+  %% → Notificações
+  subgraph Notifications
+    OrderSvc --> NotifySvc(Notification Service)
     NotifySvc -->|Email/SMS| UA
   end
